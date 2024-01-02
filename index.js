@@ -13,6 +13,7 @@ class BinaryTree {
   buildTree(array) {
     // sort array first
 
+    let sortedArray = sortArray(array);
     function buildTreeInside(array, start = 0, end = array.length - 1) {
       if (start > end) return null;
 
@@ -24,7 +25,7 @@ class BinaryTree {
 
       return newNode;
     }
-    return buildTreeInside(array);
+    return buildTreeInside(sortedArray);
   }
 }
 
@@ -41,7 +42,34 @@ const prettyPrint = (node, prefix = "", isLeft = true) => {
   }
 };
 
-array1 = [1, 2, 3, 4, 5, 6, 7, 8];
+function sortArray(myArray) {
+  if (myArray.length == 1) return myArray;
+
+  let arr1 = sortArray(myArray.splice(0, Math.floor(myArray.length / 2)));
+  let arr2 = sortArray(myArray);
+
+  let sortedArray = [];
+
+  for (let i = 0, j = 0; i < arr1.length || j < arr2.length; ) {
+    if (arr1[i] && arr2[j] && arr1[i] < arr2[j]) {
+      sortedArray.push(arr1[i]);
+      i++;
+    } else if (arr1[i] && arr2[j] && arr1[i] > arr2[j]) {
+      sortedArray.push(arr2[j]);
+      j++;
+    } else if (!arr1[i]) {
+      sortedArray.push(arr2[j]);
+      j++;
+    } else {
+      sortedArray.push(arr1[i]);
+      i++;
+    }
+  }
+
+  return sortedArray;
+}
+
+array1 = [1, 2, 3, 4, 5, 6, 8, 7];
 
 const myBinary = new BinaryTree(array1);
 
