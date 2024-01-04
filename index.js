@@ -13,6 +13,9 @@ class BinaryTree {
   buildTree(array) {
     // sort array first
 
+    if (!array) {
+      return null;
+    }
     let sortedArray = sortArray(array);
     function buildTreeInside(array, start = 0, end = array.length - 1) {
       if (start > end) return null;
@@ -26,6 +29,47 @@ class BinaryTree {
       return newNode;
     }
     return buildTreeInside(sortedArray);
+  }
+
+  insert(key, node = this.root) {
+    if (this.root === null) {
+      this.root = new Node(key);
+      return;
+    }
+
+    if (node === null) {
+      node = new Node(key);
+      return node;
+    }
+
+    if (key > node.data) {
+      node.right = this.insert(key, node.right);
+    } else if (key < node.data) {
+      node.left = this.insert(key, node.left);
+    }
+    return node;
+  }
+
+  delete(key, node = this.root) {
+    if (node === null) return;
+
+    if (key > node.data) {
+      node.right = this.delete(key, node.right);
+      console.log("right");
+      return node;
+    } else if (key < node.data) {
+      node.left = this.delete(key, node.left);
+      console.log("left");
+      return node;
+    }
+
+    if (node.data === key) {
+      if (node.left === null) {
+        return node.right;
+      } else if (node.right === null) {
+        return node.left;
+      }
+    }
   }
 }
 
@@ -71,6 +115,14 @@ function sortArray(myArray) {
 
 array1 = [1, 2, 3, 4, 5, 6, 8, 7];
 
-const myBinary = new BinaryTree(array1);
+const myBinary = new BinaryTree();
+myBinary.insert(5);
+myBinary.insert(2);
+myBinary.insert(3);
+myBinary.insert(4);
+myBinary.insert(6);
+myBinary.insert(1);
+
+myBinary.delete(1);
 
 prettyPrint(myBinary.root);
