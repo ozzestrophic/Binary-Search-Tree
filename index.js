@@ -51,7 +51,7 @@ class BinaryTree {
   }
 
   delete(key, node = this.root) {
-    if (node === null) return;
+    if (node === null) return null;
 
     if (key > node.data) {
       node.right = this.delete(key, node.right);
@@ -62,14 +62,31 @@ class BinaryTree {
       console.log("left");
       return node;
     }
-
-    if (node.data === key) {
-      if (node.left === null) {
-        return node.right;
-      } else if (node.right === null) {
-        return node.left;
+    function lookForLeaf(succ, parent) {
+      if (succ.left === null) {
+        let key = succ.data;
+        parent.left = succ.right;
+        return key;
       }
+
+      let newKey = lookForLeaf(succ.left, succ);
+      return newKey;
     }
+
+    if (node.left === null) {
+      return node.right;
+    } else if (node.right === null) {
+      return node.left;
+    }
+    if (node.right.left === null) {
+      let temp = node.left;
+      node = node.right;
+      node.left = temp;
+      return node;
+    }
+
+    node.data = lookForLeaf(node.right.left, node.right);
+    return node;
   }
 }
 
@@ -116,13 +133,18 @@ function sortArray(myArray) {
 array1 = [1, 2, 3, 4, 5, 6, 8, 7];
 
 const myBinary = new BinaryTree();
-myBinary.insert(5);
-myBinary.insert(2);
-myBinary.insert(3);
-myBinary.insert(4);
-myBinary.insert(6);
-myBinary.insert(1);
+myBinary.insert(20);
+myBinary.insert(50);
+myBinary.insert(40);
+myBinary.insert(30);
+myBinary.insert(90);
+myBinary.insert(100);
+myBinary.insert(80);
+myBinary.insert(70);
+myBinary.insert(60);
+myBinary.insert(10);
 
-myBinary.delete(1);
+// myBinary.delete(4);
+myBinary.delete(5);
 
 prettyPrint(myBinary.root);
