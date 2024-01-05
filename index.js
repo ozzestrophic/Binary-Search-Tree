@@ -275,34 +275,9 @@ function sortArray(myArray) {
   return sortedArray;
 }
 
-array1 = [1, 2, 3, 4, 5, 6, 8, 7];
-
-const myBinary = new BinaryTree();
-myBinary.insert(20);
-myBinary.insert(50);
-myBinary.insert(40);
-myBinary.insert(30);
-myBinary.insert(90);
-myBinary.insert(100);
-myBinary.insert(80);
-myBinary.insert(70);
-myBinary.insert(60);
-myBinary.insert(10);
-
 function printValues(node) {
   console.log(node.data);
 }
-
-// myBinary.levelOrder(printValues);
-// console.log("inOrder");
-// myBinary.inOrder(printValues);
-// console.log("preOrder");
-// myBinary.preOrder(printValues);
-// console.log("postOrder");
-// myBinary.postOrder(printValues);
-
-// console.log("height is ", myBinary.height());
-// console.log("100 depth is ", myBinary.depth(myBinary.find(100)));
 
 function randomArray() {
   const array = [];
@@ -311,10 +286,35 @@ function randomArray() {
   }
   return array;
 }
-const sorted = sortArray([92, 31, 34, 98, 27, 89, 36, 0, 36, 24, 77]);
-console.log(sorted);
 
-// const array = randomArray();
-// console.log(array);
-const randomBinary = new BinaryTree(sorted);
-prettyPrint(randomBinary.root);
+const array = randomArray();
+console.log(array);
+const randomBinary = new BinaryTree(array);
+// prettyPrint(randomBinary.root);
+console.log("The balance state is ", randomBinary.isBalanced());
+
+console.log(randomBinary.levelOrder());
+console.log("inOrder");
+console.log(randomBinary.inOrder());
+console.log("preOrder");
+console.log(randomBinary.preOrder());
+console.log("postOrder");
+console.log(randomBinary.postOrder());
+
+randomBinary.insert(110);
+randomBinary.insert(120);
+randomBinary.insert(117);
+randomBinary.insert(108);
+randomBinary.insert(115);
+
+console.log("The balance state is ", randomBinary.isBalanced());
+randomBinary.rebalance();
+console.log("The balance state is ", randomBinary.isBalanced());
+
+console.log(randomBinary.levelOrder());
+console.log("inOrder");
+console.log(randomBinary.inOrder());
+console.log("preOrder");
+console.log(randomBinary.preOrder());
+console.log("postOrder");
+console.log(randomBinary.postOrder());
