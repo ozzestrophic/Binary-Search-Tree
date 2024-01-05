@@ -218,6 +218,17 @@ class BinaryTree {
     }
     return balanced;
   }
+
+  rebalance() {
+    if (this.isBalanced === true) {
+      return;
+    }
+    const array = this.inOrder();
+
+    const newRoot = this.buildTree(array);
+
+    this.root = newRoot;
+  }
 }
 
 const prettyPrint = (node, prefix = "", isLeft = true) => {
@@ -296,3 +307,5 @@ function printValues(node) {
 
 console.log(myBinary.isBalanced());
 console.log(balancedBinary.isBalanced());
+myBinary.rebalance();
+prettyPrint(myBinary.root);
