@@ -138,6 +138,7 @@ class BinaryTree {
     if (array.length !== 0) return array;
   }
 
+  // inOrder preOrder postOrder
   inOrder(func, node = this.root, array = []) {
     if (!node) return;
     this.inOrder(func, node.left, array);
@@ -170,6 +171,24 @@ class BinaryTree {
       array.push(node.data);
     }
     return array;
+  }
+
+  height(node = this.root, h = 0) {
+    if (!node) return h;
+    if (!node.right && !node.left) {
+      h++;
+      return h;
+    }
+
+    const hLeft = this.height(node.left);
+    const hRight = this.height(node.right);
+    if (hLeft >= hRight) {
+      h = hLeft;
+    } else {
+      h = hRight;
+    }
+    h++;
+    return h;
   }
 }
 
@@ -229,14 +248,16 @@ myBinary.insert(10);
 
 prettyPrint(myBinary.root);
 
-myBinary.levelOrder(printValues);
-
 function printValues(node) {
   console.log(node.data);
 }
-console.log("inOrder");
-myBinary.inOrder();
-console.log("preOrder");
-myBinary.preOrder();
-console.log("postOrder");
-myBinary.postOrder();
+
+// myBinary.levelOrder(printValues);
+// console.log("inOrder");
+// myBinary.inOrder(printValues);
+// console.log("preOrder");
+// myBinary.preOrder(printValues);
+// console.log("postOrder");
+// myBinary.postOrder(printValues);
+
+console.log("height is ", myBinary.height());
