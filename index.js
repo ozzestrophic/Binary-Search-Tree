@@ -88,6 +88,16 @@ class BinaryTree {
     node.data = lookForLeaf(node.right.left, node.right);
     return node;
   }
+
+  find(key, node = this.root) {
+    if (key === node.data) return node;
+
+    if (key > node.data) {
+      return this.find(key, node.right);
+    } else if (key < node.data) {
+      return this.find(key, node.left);
+    }
+  }
 }
 
 const prettyPrint = (node, prefix = "", isLeft = true) => {
@@ -144,7 +154,6 @@ myBinary.insert(70);
 myBinary.insert(60);
 myBinary.insert(10);
 
-// myBinary.delete(4);
-myBinary.delete(5);
+console.log(myBinary.find(70));
 
 prettyPrint(myBinary.root);
