@@ -176,7 +176,6 @@ class BinaryTree {
   height(node = this.root, h = 0) {
     if (!node) return h;
     if (!node.right && !node.left) {
-      h++;
       return h;
     }
 
@@ -189,6 +188,19 @@ class BinaryTree {
     }
     h++;
     return h;
+  }
+
+  depth(node, currentNode = this.root, h = 0) {
+    if (!node) return 0;
+
+    if (node.data === currentNode.data) return h;
+
+    h++;
+    if (node.data > currentNode.data) {
+      return this.depth(node, currentNode.right, h);
+    } else if (node.data < currentNode.data) {
+      return this.depth(node, currentNode.left, h);
+    }
   }
 }
 
@@ -261,3 +273,4 @@ function printValues(node) {
 // myBinary.postOrder(printValues);
 
 console.log("height is ", myBinary.height());
+console.log("100 depth is ", myBinary.depth(myBinary.find(110)));
