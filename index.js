@@ -1,6 +1,6 @@
 class Node {
   constructor(data) {
-    this.data = data || null;
+    this.data = data;
     this.right = null;
     this.left = null;
   }
@@ -253,13 +253,17 @@ function sortArray(myArray) {
   let sortedArray = [];
 
   for (let i = 0, j = 0; i < arr1.length || j < arr2.length; ) {
-    if (arr1[i] && arr2[j] && arr1[i] < arr2[j]) {
+    if (arr1[i] !== undefined && arr2[j] !== undefined && arr1[i] < arr2[j]) {
       sortedArray.push(arr1[i]);
       i++;
-    } else if (arr1[i] && arr2[j] && arr1[i] > arr2[j]) {
+    } else if (
+      arr1[i] !== undefined &&
+      arr2[j] !== undefined &&
+      arr1[i] > arr2[j]
+    ) {
       sortedArray.push(arr2[j]);
       j++;
-    } else if (!arr1[i]) {
+    } else if (arr1[i] === undefined) {
       sortedArray.push(arr2[j]);
       j++;
     } else {
@@ -285,11 +289,6 @@ myBinary.insert(70);
 myBinary.insert(60);
 myBinary.insert(10);
 
-const balancedBinary = new BinaryTree(array1);
-
-prettyPrint(myBinary.root);
-prettyPrint(balancedBinary.root);
-
 function printValues(node) {
   console.log(node.data);
 }
@@ -305,7 +304,17 @@ function printValues(node) {
 // console.log("height is ", myBinary.height());
 // console.log("100 depth is ", myBinary.depth(myBinary.find(100)));
 
-console.log(myBinary.isBalanced());
-console.log(balancedBinary.isBalanced());
-myBinary.rebalance();
-prettyPrint(myBinary.root);
+function randomArray() {
+  const array = [];
+  for (let i = 0; i < 10; i++) {
+    array.push(Math.floor(Math.random() * 100));
+  }
+  return array;
+}
+const sorted = sortArray([92, 31, 34, 98, 27, 89, 36, 0, 36, 24, 77]);
+console.log(sorted);
+
+// const array = randomArray();
+// console.log(array);
+const randomBinary = new BinaryTree(sorted);
+prettyPrint(randomBinary.root);
