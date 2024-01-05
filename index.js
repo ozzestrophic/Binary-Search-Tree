@@ -90,6 +90,7 @@ class BinaryTree {
   }
 
   find(key, node = this.root) {
+    if (!node) return null;
     if (key === node.data) return node;
 
     if (key > node.data) {
