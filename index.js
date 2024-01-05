@@ -98,6 +98,79 @@ class BinaryTree {
       return this.find(key, node.left);
     }
   }
+
+  levelOrder(func) {
+    if (this.root === null) return;
+
+    const array = [];
+
+    const q = [];
+    q.push(this.root);
+
+    while (q.length !== 0) {
+      const currentNode = q.shift();
+
+      if (func) {
+        func(currentNode);
+      } else {
+        array.push(currentNode.data);
+      }
+      if (currentNode.left) q.push(currentNode.left);
+      if (currentNode.right) q.push(currentNode.right);
+    }
+    if (array.length !== 0) return array;
+  }
+
+  levelOrderRecursive(func, q = [this.root], array = []) {
+    const currentNode = q.shift();
+    if (!currentNode) return;
+    if (func) {
+      func(currentNode);
+    } else {
+      array.push(currentNode.data);
+    }
+    if (currentNode.left) q.push(currentNode.left);
+    if (currentNode.right) q.push(currentNode.right);
+
+    if (q.length !== 0) {
+      this.levelOrderRecursive(func, q, array);
+    }
+    if (array.length !== 0) return array;
+  }
+
+  inOrder(func, node = this.root, array = []) {
+    if (!node) return;
+    this.inOrder(func, node.left, array);
+    if (func) {
+      func(node);
+    } else {
+      array.push(node.data);
+    }
+    this.inOrder(func, node.right, array);
+    return array;
+  }
+  preOrder(func, node = this.root, array = []) {
+    if (!node) return;
+    if (func) {
+      func(node);
+    } else {
+      array.push(node.data);
+    }
+    this.preOrder(func, node.left, array);
+    this.preOrder(func, node.right, array);
+    return array;
+  }
+  postOrder(func, node = this.root, array = []) {
+    if (!node) return;
+    this.postOrder(func, node.left, array);
+    this.postOrder(func, node.right, array);
+    if (func) {
+      func(node);
+    } else {
+      array.push(node.data);
+    }
+    return array;
+  }
 }
 
 const prettyPrint = (node, prefix = "", isLeft = true) => {
@@ -154,6 +227,16 @@ myBinary.insert(70);
 myBinary.insert(60);
 myBinary.insert(10);
 
-console.log(myBinary.find(70));
-
 prettyPrint(myBinary.root);
+
+myBinary.levelOrder(printValues);
+
+function printValues(node) {
+  console.log(node.data);
+}
+console.log("inOrder");
+myBinary.inOrder();
+console.log("preOrder");
+myBinary.preOrder();
+console.log("postOrder");
+myBinary.postOrder();
