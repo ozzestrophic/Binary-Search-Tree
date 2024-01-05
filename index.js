@@ -203,6 +203,21 @@ class BinaryTree {
       return this.depth(node, currentNode.left, h);
     }
   }
+
+  isBalanced(node = this.root, balanced = true) {
+    if (!node || !balanced) return balanced;
+
+    const leftHeight = this.height(node.left, balanced);
+    const rightHeight = this.height(node.right, balanced);
+
+    if ([0, 1, -1].includes(leftHeight - rightHeight)) {
+      balanced = this.isBalanced(node.left);
+      balanced = this.isBalanced(node.right);
+    } else {
+      balanced = false;
+    }
+    return balanced;
+  }
 }
 
 const prettyPrint = (node, prefix = "", isLeft = true) => {
@@ -259,7 +274,10 @@ myBinary.insert(70);
 myBinary.insert(60);
 myBinary.insert(10);
 
+const balancedBinary = new BinaryTree(array1);
+
 prettyPrint(myBinary.root);
+prettyPrint(balancedBinary.root);
 
 function printValues(node) {
   console.log(node.data);
@@ -273,5 +291,8 @@ function printValues(node) {
 // console.log("postOrder");
 // myBinary.postOrder(printValues);
 
-console.log("height is ", myBinary.height());
-console.log("100 depth is ", myBinary.depth(myBinary.find(110)));
+// console.log("height is ", myBinary.height());
+// console.log("100 depth is ", myBinary.depth(myBinary.find(100)));
+
+console.log(myBinary.isBalanced());
+console.log(balancedBinary.isBalanced());
